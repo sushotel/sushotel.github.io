@@ -6,7 +6,7 @@
 	"class":"to-page",
 	"data":
 		{
-			"page": 8
+			"page": 3
 		}
 },
 {
@@ -15,10 +15,7 @@
 	"width":114,
 	"height":15,
 	"class":"to-page",
-	"data":
-		{
-			"page": 10
-		}
+
 },
 {
 	"x":256,
@@ -28,7 +25,7 @@
 	"class":"to-page",
 	"data":
 		{
-			"page": 12
+			"page": 3
 		}
 },
 {
@@ -39,7 +36,7 @@
 	"class":"to-page",
 	"data":
 		{
-			"page": 12
+			"page": 3
 		}
 }
 ]
