@@ -539,22 +539,9 @@ yepnope({
 
 <script>
 // alert box
-var user_id = "Zurich";
-var url = window.location.href;
-var parser = document.createElement('a');
-parser.href = url;
-//-------------------------
-/*function getParameterByName(name) {
-    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
 
-var tic = getParameterByName('tic');
-alert(tic); */
-//--------------------
-var qs = (function(a) {
+//read URL parameters from query string
+var queryString = (function(a) {
     if (a == "") return {};
     var b = {};
     for (var i = 0; i < a.length; ++i)
@@ -567,7 +554,8 @@ var qs = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-alert(qs["tic"]);
+var user_id = queryString["tic"];
+
 //-------------------------
 var interval = 30000;
 function alertbox (){
@@ -584,7 +572,7 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("http://google.com/search?q="+user_id+"");
+	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php?SES="+user_id+"");
 	   	} else {
 	   		interval = 15000;
 	   		swal({
