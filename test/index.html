@@ -540,7 +540,7 @@ yepnope({
 <script>
 // alert box
 var user_id = "Zurich";
-var interval = 8000;
+var interval = 30000;
 function alertbox (){
 	swal({
 	   title: "Time up!",   
@@ -557,7 +557,7 @@ function alertbox (){
 	   	if (isConfirm) {     
 	   		window.location.replace("http://google.com/search?q="+user_id+"");
 	   	} else {
-	   		interval = 3000;
+	   		interval = 15000;
 	   		swal({
 	   			title: "Okay!",
 	   			text: "Will remind you again in a minute",
