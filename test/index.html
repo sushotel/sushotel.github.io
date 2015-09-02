@@ -540,6 +540,10 @@ yepnope({
 <script>
 // alert box
 var user_id = "Zurich";
+var url = window.location.href;
+var parser = document.createElement('a');
+parser.href = url;
+alert(parser.tic);
 var interval = 30000;
 function alertbox (){
 	swal({
