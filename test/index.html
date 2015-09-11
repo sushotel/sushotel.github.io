@@ -644,6 +644,10 @@ $(document).ready(function () {
     $(this).keydown(function (e) {
         idleTime = 0;
     });
+    $(this).tap(function (e) {
+        idleTime = 0;
+        alert("tap event");
+    });
 });
 
 function timerIncrement() {
