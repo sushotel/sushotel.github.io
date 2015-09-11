@@ -11,6 +11,7 @@
 <script type="text/javascript" src="../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../lib/hash.js"></script>
 <script type="text/javascript" src="../js/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
 
 
@@ -644,7 +645,7 @@ $(document).ready(function () {
     $(this).keydown(function (e) {
         idleTime = 0;
     });
-    $(this).tap(function (e) {
+    $(this).vmousemove(function (e) {
         idleTime = 0;
         alert("tap event");
     });
