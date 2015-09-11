@@ -554,10 +554,11 @@ var queryString = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-var user_id = queryString["tic"];
+var user_id = queryString["ticid"];
+alert(user_id);
 
 //-------------------------
-var popup_a_interval = 240000;
+var popup_a_interval = 2400;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 function alertbox (){
