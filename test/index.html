@@ -212,6 +212,7 @@ function loadApp() {
 
 					disableControls(page);
 					woopra.track();
+					idleTime =0;
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -641,9 +642,11 @@ $(document).ready(function () {
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
         idleTime = 0;
+        
     });
     $(this).keydown(function (e) {
         idleTime = 0;
+
     });
     $(this).on("tap", function (e) {
         idleTime = 0;
