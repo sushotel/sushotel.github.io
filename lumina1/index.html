@@ -11,6 +11,7 @@
 <script type="text/javascript" src="../extras/modernizr.2.5.3.min.js"></script>
 <script type="text/javascript" src="../lib/hash.js"></script>
 <script type="text/javascript" src="../js/sweetalert.min.js"></script>
+<script type="text/javascript" src="../js/jquery.mobile-1.4.5.min.js"></script>
 <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
 
 
@@ -211,6 +212,7 @@ function loadApp() {
 
 					disableControls(page);
 					woopra.track();
+					idleTime =0;
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -640,8 +642,13 @@ $(document).ready(function () {
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
         idleTime = 0;
+        
     });
     $(this).keydown(function (e) {
+        idleTime = 0;
+
+    });
+    $(this).on("tap", function (e) {
         idleTime = 0;
     });
 });
@@ -649,9 +656,7 @@ $(document).ready(function () {
 function timerIncrement() {
     idleTime = idleTime + 10000;
     if (idleTime >= 40000) { // 40 seconds
-        //popup_a_interval = (popup_a_interval + idleTime);
         delayTime = (delayTime +idleTime);
-        //alert("delay "+delayTime+" idle "+idleTime);
     }
 }
 </script> 

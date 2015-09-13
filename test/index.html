@@ -650,16 +650,13 @@ $(document).ready(function () {
     });
     $(this).on("tap", function (e) {
         idleTime = 0;
-        alert("tap event");
     });
 });
 
 function timerIncrement() {
     idleTime = idleTime + 10000;
     if (idleTime >= 40000) { // 40 seconds
-        //popup_a_interval = (popup_a_interval + idleTime);
         delayTime = (delayTime +idleTime);
-        //alert("delay "+delayTime+" idle "+idleTime);
     }
 }
 </script> 
