@@ -659,15 +659,14 @@ function timerIncrement() {
     idleTime = idleTime + 10000;
     if (idleTime >= 40000) { // 40 seconds
         delayTime = (delayTime +idleTime);
-        swal("aaa");
-        /*if (idleTime >=60000){
+        if (idleTime >=60000){
         	swal({
 			title: "Hilfe",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
 			});
 			//idleTime =0;
-        } */
+        }
     }
 }
 </script> 
