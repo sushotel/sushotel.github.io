@@ -658,10 +658,10 @@ $(document).ready(function () {
 function timerIncrement() {
     idleTime = idleTime + 10000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
-    //swal("Nice!", "idleTime " + idleTime, "delayTime " + delayTime);
+    //swal("Nice!", "idleTime " + idleTime + "delayTime " + delayTime);
     if (idleTime >= 40000) { // 40 seconds
         delayTime = (delayTime +idleTime);
-        swal("Nice!", "idleTime " + idleTime, "delayTime " + delayTime);
+        swal("Nice!", "idleTime " + idleTime + " delayTime " + delayTime);
         //alert("idle "+idleTime+" delay "+delayTime);
         idleTime =0;
         /*swal({
@@ -672,7 +672,6 @@ function timerIncrement() {
 		idleTime =0; */
         }
     }
-
 
 </script> 
 
