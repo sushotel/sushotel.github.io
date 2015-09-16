@@ -586,7 +586,7 @@ function alertbox (){
 	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php?SES="+user_id+"");
 	   	} else {
 	   		popup_a_interval = (popup_a_interval/2);
-	   		if (popup_a_interval > 10000) {
+	   		if (popup_a_interval > 30000) {
 	   			setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
@@ -666,7 +666,7 @@ $(document).ready(function () {
         idleTime = 0;
     });
 });
-
+var popup_count =0;
 function timerIncrement() {
     idleTime = idleTime + 5000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
