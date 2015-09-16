@@ -670,7 +670,7 @@ var popup_count =0;
 function timerIncrement() {
     idleTime = idleTime + 10000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
-    if (idleTime >= 40000 && delayTime <240000) { // 40 seconds
+    if (idleTime >= 80000 && delayTime <240000) { // 40 seconds
         delayTime = (delayTime + idleTime);
         swal({
 			title: "Hilfe!",
