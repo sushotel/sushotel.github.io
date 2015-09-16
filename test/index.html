@@ -670,7 +670,7 @@ var popup_count =0;
 function timerIncrement() {
     idleTime = idleTime + 5000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
-    if (idleTime >= 80000 && delayTime <240000) { // 40 seconds
+    if (idleTime >= 20000 && delayTime <240000) { // 40 seconds
         delayTime = (delayTime + idleTime);
         swal({
 			title: "Hilfe!",
@@ -683,9 +683,12 @@ function timerIncrement() {
     }
 
 /*setInterval(function(){ 
-	swal("Nice2!", "idleTime " + idleTime + " delayTime " + delayTime);
-
-},10000); */
+	if (idleTime >=20000)
+	{
+		swal("Nice2!", "idleTime " + idleTime + " delayTime " + delayTime);
+	}
+	
+},20000); */
 
 
 </script> 
