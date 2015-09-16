@@ -564,7 +564,7 @@ var queryString = (function(a) {
 var user_id = queryString["ticid"];
 
 //-------------------------
-var popup_a_interval = 250000;
+var popup_a_interval = 260000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 
@@ -586,7 +586,7 @@ function alertbox (){
 	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php?SES="+user_id+"");
 	   	} else {
 	   		popup_a_interval = (popup_a_interval/2);
-	   		if (popup_a_interval > 10000) {
+	   		if (popup_a_interval > 30000) {
 	   			setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
@@ -646,6 +646,17 @@ setTimeout(function(){
 	idleAlert();
 }, idle_help_reminder);
 
+//popupB
+var popup80 = false;  //status FLAG
+function popupB(){
+
+	swal({
+			title: "Hilfe!",
+	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
+	   		imageUrl: "../images/help.png"
+		});
+}
+
 
 //Tracking the idle time
 var idleTime = 0;
@@ -668,26 +679,25 @@ $(document).ready(function () {
 });
 var popup_count =0;
 function timerIncrement() {
-    idleTime = idleTime + 5000;
+    idleTime = idleTime + 10000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
     if (idleTime >= 80000 && delayTime <240000) { // 40 seconds
-        delayTime = (delayTime + idleTime);
-        swal({
+        delayTime = (delayTime + 80000);
+        if (popup80 == false){
+        	popupB();
+        	popup80 = true;
+        }
+        /*swal({
 			title: "Hilfe!",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
-		});
+		}); */
         idleTime =0;
-        popup_count ++;
-        ga('send', 'event', 'help', 'popupB', 'nav buttons', popup_count);
         
         }
     }
 
-/*setInterval(function(){ 
-	swal("Nice2!", "idleTime " + idleTime + " delayTime " + delayTime);
 
-},10000); */
 
 
 </script> 
