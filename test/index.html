@@ -146,6 +146,8 @@ woopra.track();
 
 <script type="text/javascript">
 
+var lastPage = false;
+
 function loadApp() {
 
  	$('#canvas').fadeIn(1000);
@@ -213,6 +215,9 @@ function loadApp() {
 					disableControls(page);
 					woopra.track();
 					idleTime =0;
+					if (page ==30) {
+						lastPage = true;
+					}
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -559,7 +564,7 @@ var queryString = (function(a) {
 var user_id = queryString["ticid"];
 
 //-------------------------
-var popup_a_interval = 240000;
+var popup_a_interval = 250000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 
@@ -616,7 +621,14 @@ function idleAlert() {
 //popup_A to redirect users
 setTimeout(function(){
 	//alertbox();
-	delay();
+	if (lastPage)
+	{
+		alertbox();
+	}
+	else{
+		delay();
+	}
+	
 }, popup_a_interval); 
 
 
@@ -656,22 +668,25 @@ $(document).ready(function () {
 });
 
 function timerIncrement() {
-    idleTime = idleTime + 10000;
+    idleTime = idleTime + 5000;
     //alert("Nice idle "+idleTime+" delay "+delayTime);
-    //swal("Nice!", "idleTime " + idleTime + "delayTime " + delayTime);
-    if (idleTime >= 40000) { // 40 seconds
-        delayTime = (delayTime +idleTime);
-        swal("Nice!", "idleTime " + idleTime + " delayTime " + delayTime);
-        //alert("idle "+idleTime+" delay "+delayTime);
-        idleTime =0;
-        /*swal({
-			title: "Hilfe",
+    if (idleTime >= 80000 && delayTime <240000) { // 40 seconds
+        delayTime = (delayTime + idleTime);
+        swal({
+			title: "Hilfe!",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
 		});
-		idleTime =0; */
+        idleTime =0;
+        
         }
     }
+
+/*setInterval(function(){ 
+	swal("Nice2!", "idleTime " + idleTime + " delayTime " + delayTime);
+
+},10000); */
+
 
 </script> 
 
