@@ -111,7 +111,7 @@ woopra.track();
 				<span>18-19</span>
 			</li>
 			<li class="i">
-				<img src="pages/20-thumb.jpg" width="76" height="100" class="page-20">
+				<img src="pages/30-thumb.jpg" width="76" height="100" class="page-30">
 				<span>20</span>
 			</li>
 		<ul>
@@ -120,6 +120,8 @@ woopra.track();
 </div>
 
 <script type="text/javascript">
+
+var lastPage = false;
 
 function loadApp() {
 
@@ -188,6 +190,9 @@ function loadApp() {
 					disableControls(page);
 					woopra.track();
 					idleTime =0;
+					if (page ==30) {
+						lastPage = true;
+					}
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -534,10 +539,13 @@ var queryString = (function(a) {
 var user_id = queryString["ticid"];
 
 //-------------------------
-var popup_a_interval = 240000;
+var popup_a_interval = 260000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
+var popup_a_status = true;
+
 function alertbox (){
+	popup_a_status = false;
 	swal({
 	   title: "Notification",   
 	   text: "Would you like to read the brochure further or proceed to the questionnaire?",   
@@ -551,15 +559,12 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php?SES="+user_id+"");
+	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php3?return_tic="+user_id+"");
 	   	} else {
 	   		popup_a_interval = (popup_a_interval/2);
-	   		if (popup_a_interval > 10000) {
-	   			setTimeout(function(){
+	   		setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
-	   		};
-	   		
 	   	} 
 	   });
 }
@@ -579,17 +584,46 @@ function idleAlert() {
 	var current_URL = window.location.href;
 	if (initial_URL == current_URL) {
 		swal({
-			title: "Need Help!",
+			title: "Help",
 	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
 	   		imageUrl: "../images/help.png"
+	   	}, function (){
+	   		Clock.resume();
 		});
 	} else {}
 }
 
+
+setInterval(function(){
+	var active_time = Clock.totalSeconds;
+	if (lastPage && popup_a_status && active_time >= 220 && idleTime >=10) {
+    	popup_a_status = false;
+    	alertbox();
+  	}else if (popup_a_status && active_time >=300 && idleTime >=10) {
+  		popup_a_status = false;
+  		alertbox();
+  	} else if (popup_a_status && active_time >=360) {
+  		popup_a_status = false;
+  		alertbox();
+
+  	} else {}
+
+}, 3000);
+
+
+
+/*
 //popup_A to redirect users
 setTimeout(function(){
 	//alertbox();
-	delay();
+	if (lastPage)
+	{
+		alertbox();
+	}
+	else{
+		delay();
+	}
+	
 }, popup_a_interval); 
 
 
@@ -600,7 +634,7 @@ function delay() {
 		alertbox();
 		delayTime =0; //delay reset
 	}, delayTime); 
-}
+}  */
 
 // to assist users with the UI (help popup)
 setTimeout(function(){
@@ -627,13 +661,55 @@ $(document).ready(function () {
         idleTime = 0;
     });
 });
-
+var popup_count =0;
 function timerIncrement() {
     idleTime = idleTime + 10000;
-    if (idleTime >= 40000) { // 40 seconds
-        delayTime = (delayTime +idleTime);
+    //swal("Clock", "Time " + Clock.totalSeconds);
+    //alert("Nice idle "+idleTime+" delay "+delayTime);
+    if (idleTime >= 80000 && popup_a_status) { // 40 seconds
+        //delayTime = (delayTime + idleTime);
+        Clock.pause();
+        swal({
+			title: "Help!",
+	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
+	   		imageUrl: "../images/help.png"
+	   	}, function () {
+	   		Clock.resume();
+		});
+        idleTime =0;
+        
+        };
     }
-}
+
+//----------------------------------
+var Clock = {
+  totalSeconds: 0,
+
+  start: function () {
+    var self = this;
+
+    this.interval = setInterval(function () {
+      self.totalSeconds += 1;
+
+      $("#hour").text(Math.floor(self.totalSeconds / 3600));
+      $("#min").text(Math.floor(self.totalSeconds / 60 % 60));
+      $("#sec").text(parseInt(self.totalSeconds % 60));
+    }, 1000);
+  },
+
+  pause: function () {
+    clearInterval(this.interval);
+    delete this.interval;
+  },
+
+  resume: function () {
+    if (!this.interval) this.start();
+  }
+};
+
+Clock.start();
+
+
 </script> 
 
 

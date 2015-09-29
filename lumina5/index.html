@@ -146,6 +146,8 @@ woopra.track();
 
 <script type="text/javascript">
 
+var lastPage = false;
+
 function loadApp() {
 
  	$('#canvas').fadeIn(1000);
@@ -213,6 +215,9 @@ function loadApp() {
 					disableControls(page);
 					woopra.track();
 					idleTime =0;
+					if (page ==30) {
+						lastPage = true;
+					}
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -559,10 +564,13 @@ var queryString = (function(a) {
 var user_id = queryString["ticid"];
 
 //-------------------------
-var popup_a_interval = 240000;
+var popup_a_interval = 260000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
+var popup_a_status = true;
+
 function alertbox (){
+	popup_a_status = false;
 	swal({
 	   title: "Meldung",   
 	   text: "M\xF6chten Sie in der Brosch\xFCre weiterlesen oder bereits jetzt mit dem Fragebogen fortfahren?",   
@@ -576,15 +584,12 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php?SES="+user_id+"");
+	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php3?return_tic="+user_id+"");
 	   	} else {
 	   		popup_a_interval = (popup_a_interval/2);
-	   		if (popup_a_interval > 10000) {
-	   			setTimeout(function(){
+	   		setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
-	   		};
-	   		
 	   	} 
 	   });
 }
@@ -607,14 +612,43 @@ function idleAlert() {
 			title: "Hilfe",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
+	   	}, function (){
+	   		Clock.resume();
 		});
 	} else {}
 }
 
+
+setInterval(function(){
+	var active_time = Clock.totalSeconds;
+	if (lastPage && popup_a_status && active_time >= 220 && idleTime >=10) {
+    	popup_a_status = false;
+    	alertbox();
+  	}else if (popup_a_status && active_time >=300 && idleTime >=10) {
+  		popup_a_status = false;
+  		alertbox();
+  	} else if (popup_a_status && active_time >=360) {
+  		popup_a_status = false;
+  		alertbox();
+
+  	} else {}
+
+}, 3000);
+
+
+
+/*
 //popup_A to redirect users
 setTimeout(function(){
 	//alertbox();
-	delay();
+	if (lastPage)
+	{
+		alertbox();
+	}
+	else{
+		delay();
+	}
+	
 }, popup_a_interval); 
 
 
@@ -625,7 +659,7 @@ function delay() {
 		alertbox();
 		delayTime =0; //delay reset
 	}, delayTime); 
-}
+}  */
 
 // to assist users with the UI (help popup)
 setTimeout(function(){
@@ -652,13 +686,55 @@ $(document).ready(function () {
         idleTime = 0;
     });
 });
-
+var popup_count =0;
 function timerIncrement() {
     idleTime = idleTime + 10000;
-    if (idleTime >= 40000) { // 40 seconds
-        delayTime = (delayTime +idleTime);
+    //swal("Clock", "Time " + Clock.totalSeconds);
+    //alert("Nice idle "+idleTime+" delay "+delayTime);
+    if (idleTime >= 80000 && popup_a_status) { // 40 seconds
+        //delayTime = (delayTime + idleTime);
+        Clock.pause();
+        swal({
+			title: "Hilfe!",
+	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
+	   		imageUrl: "../images/help.png"
+	   	}, function () {
+	   		Clock.resume();
+		});
+        idleTime =0;
+        
+        };
     }
-}
+
+//----------------------------------
+var Clock = {
+  totalSeconds: 0,
+
+  start: function () {
+    var self = this;
+
+    this.interval = setInterval(function () {
+      self.totalSeconds += 1;
+
+      $("#hour").text(Math.floor(self.totalSeconds / 3600));
+      $("#min").text(Math.floor(self.totalSeconds / 60 % 60));
+      $("#sec").text(parseInt(self.totalSeconds % 60));
+    }, 1000);
+  },
+
+  pause: function () {
+    clearInterval(this.interval);
+    delete this.interval;
+  },
+
+  resume: function () {
+    if (!this.interval) this.start();
+  }
+};
+
+Clock.start();
+
+
 </script> 
 
 
