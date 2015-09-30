@@ -614,7 +614,11 @@ function idleAlert() {
 	   		imageUrl: "../images/help.png"
 	   	}, function (){
 	   		Clock.resume();
-	   		woopra.track();
+	   		woopra.track("resume", {
+			    company: "My Business",
+			    username: "johndoe",
+			    plan: "Gold"
+			});
 		});
 	} else {}
 }
