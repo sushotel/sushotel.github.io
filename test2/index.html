@@ -614,6 +614,7 @@ function idleAlert() {
 	   		imageUrl: "../images/help.png"
 	   	}, function (){
 	   		Clock.resume();
+	   		woopra.track();
 		});
 	} else {}
 }
@@ -694,12 +695,14 @@ function timerIncrement() {
     if (idleTime >= 80000 && popup_a_status) { // 40 seconds
         //delayTime = (delayTime + idleTime);
         Clock.pause();
+        woopra.track();
         swal({
 			title: "Hilfe!",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
 	   	}, function () {
 	   		Clock.resume();
+	   		woopra.track();
 		});
         idleTime =0;
         
