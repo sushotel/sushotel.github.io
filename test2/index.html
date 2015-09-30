@@ -614,10 +614,9 @@ function idleAlert() {
 	   		imageUrl: "../images/help.png"
 	   	}, function (){
 	   		Clock.resume();
+	   		var time_now = (new Date()).toUTCString();
 	   		woopra.track("resume", {
-			    company: "My Business",
-			    username: "johndoe",
-			    plan: "Gold"
+			    timestamp: time_now
 			});
 		});
 	} else {}
