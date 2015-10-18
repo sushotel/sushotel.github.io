@@ -700,32 +700,37 @@ $(document).ready(function () {
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
         
     });
     $(this).keydown(function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
 
     });
     $(this).on("tap", function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
     });
 });
 
 var popup_count =0;
 var clock_active = true;
-var current_idleTime = 0;
+var current_idleTime = 0; //to track reading time
+var idleTime_clone = 0; //to track reading time
 
-
+//to calculate reading time
 setInterval(function(){
-	if (idleTime >=10) {
-		current_idleTime = current_idleTime+idleTime;
-		idleTime =0;
+	if (idleTime_clone >=10) {
+		current_idleTime = current_idleTime+idleTime_clone;
+		idleTime_clone =0;
 	};	
 },11000);
 
 
 function timerIncrement() {
     idleTime = idleTime + 5000;
+    idleTime_clone = idleTime_clone +5000;
 
     if (idleTime >= 80000 && popup_a_status &&clock_active) { // 40 seconds
         //delayTime = (delayTime + idleTime);
@@ -748,7 +753,7 @@ function timerIncrement() {
 			    elapsed_time_seconds: ((time_resume - time_pause)/1000)
 			});
 		});
-        //idleTime =0;
+        idleTime =0;
         
         };
     }
