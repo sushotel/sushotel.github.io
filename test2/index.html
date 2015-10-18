@@ -719,6 +719,7 @@ var current_idleTime = 0;
 setInterval(function(){
 	if (idleTime >=10) {
 		current_idleTime = current_idleTime+idleTime;
+		idleTime =0;
 	};	
 },11000);
 
