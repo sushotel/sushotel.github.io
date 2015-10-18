@@ -147,6 +147,7 @@ woopra.track();
 <script type="text/javascript">
 
 var lastPage = false;
+var time_then = Date.now();
 
 function loadApp() {
 
@@ -213,7 +214,16 @@ function loadApp() {
 					// Show and hide navigation buttons
 
 					disableControls(page);
+
 					woopra.track();
+					
+					var time_now = Date.now();
+					woopra.track("read", {
+						reading_time: ((time_now - time_then)/1000),
+						page_no: page
+					});
+					time_then = Date.now();
+
 					idleTime =0;
 					if (page ==30) {
 						lastPage = true;
@@ -585,7 +595,15 @@ function alertbox (){
 	   function(isConfirm){   
 	   	if (isConfirm) {     
 	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php3?return_tic="+user_id+"");
+	   		var time_now = new Date();
+			woopra.track("goto_survey", {
+			    timestamp: time_now.toUTCString(),
+			});
 	   	} else {
+	   		var time_now = new Date();
+			woopra.track("need_time", {
+			    timestamp: time_now.toUTCString(),
+			});
 	   		popup_a_interval = (popup_a_interval/2);
 	   		setTimeout(function(){
 	   			alertbox();
