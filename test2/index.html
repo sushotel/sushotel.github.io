@@ -219,8 +219,10 @@ function loadApp() {
 					
 					var time_now = Date.now();
 					woopra.track("read", {
-						reading_time: ((time_now - time_then)/1000),
-						page_no: page
+						page_no: page,
+						viewing_time: ((time_now - time_then)/1000),
+						reading_time: (((time_now - time_then)-idleTime)/1000)
+						
 					});
 					time_then = Date.now();
 
