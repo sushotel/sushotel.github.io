@@ -222,8 +222,7 @@ function loadApp() {
 					woopra.track("read", {
 						page_no: page,
 						viewing_time: ((time_now - time_then)/1000),
-						reading_time: (((time_now - time_then)-current_idleTime)/1000),
-						idle: current_idleTime
+						reading_time: (((time_now - time_then)-current_idleTime)/1000)
 						
 					});
 					current_idleTime = 0;
@@ -750,7 +749,7 @@ function timerIncrement() {
 	   		var time_resume = new Date();
 	   		woopra.track("resume", {
 			    timestamp: time_resume.toUTCString(),
-			    elapsed_time_seconds: ((time_resume - time_pause)/1000)
+			    elapsed_time: ((time_resume - time_pause)/1000)
 			});
 		});
         idleTime =0;
