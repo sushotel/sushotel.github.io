@@ -695,11 +695,10 @@ setTimeout(function(){
 var idleTime = 0;
 $(document).ready(function () {
     //Increment the idle time counter every minute.
-    var idleInterval = setInterval(timerIncrement, 10000); // 10 seconds
+    var idleInterval = setInterval(timerIncrement, 5000); // 10 seconds
 
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
-        current_idleTime = current_idleTime+idleTime;
         idleTime = 0;
         
     });
@@ -716,8 +715,16 @@ var popup_count =0;
 var clock_active = true;
 var current_idleTime = 0;
 
+
+setInterval(function(){
+	if (idleTime >=10) {
+		current_idleTime = current_idleTime+idleTime;
+	};	
+},11000);
+
+
 function timerIncrement() {
-    idleTime = idleTime + 10000;
+    idleTime = idleTime + 5000;
 
     if (idleTime >= 80000 && popup_a_status &&clock_active) { // 40 seconds
         //delayTime = (delayTime + idleTime);
