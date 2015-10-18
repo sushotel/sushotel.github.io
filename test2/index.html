@@ -687,13 +687,15 @@ $(document).ready(function () {
     });
 });
 var popup_count =0;
+var clock_active = true;
 function timerIncrement() {
     idleTime = idleTime + 10000;
     //swal("Clock", "Time " + Clock.totalSeconds);
     //alert("Nice idle "+idleTime+" delay "+delayTime);
-    if (idleTime >= 80000 && popup_a_status) { // 40 seconds
+    if (idleTime >= 80000 && popup_a_status &&clock_active) { // 40 seconds
         //delayTime = (delayTime + idleTime);
         Clock.pause();
+        clock_active = false;
         var time_pause = new Date();
 	   		woopra.track("pause", {
 			    timestamp: time_pause.toUTCString()
@@ -704,10 +706,11 @@ function timerIncrement() {
 	   		imageUrl: "../images/help.png"
 	   	}, function () {
 	   		Clock.resume();
+	   		clock_active = true;
 	   		var time_resume = new Date();
 	   		woopra.track("resume", {
 			    timestamp: time_resume.toUTCString(),
-			    elapsed_time_seconds: (time_resume - time_pause)
+			    elapsed_time_seconds: ((time_resume - time_pause)/1000)
 			});
 		});
         idleTime =0;
