@@ -223,7 +223,7 @@ function loadApp() {
 						page_no: page,
 						viewing_time: ((time_now - time_then)/1000),
 						reading_time: (((time_now - time_then)-current_idleTime)/1000),
-						idle: idleTime
+						idle: current_idleTime
 						
 					});
 					current_idleTime = 0;
