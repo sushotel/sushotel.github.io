@@ -215,21 +215,25 @@ function loadApp() {
 
 					disableControls(page);
 
+					//tracking code
 					woopra.track();
 					
 					var time_now = Date.now();
 					woopra.track("read", {
 						page_no: page,
 						viewing_time: ((time_now - time_then)/1000),
-						reading_time: (((time_now - time_then)-idleTime)/1000)
+						reading_time: (((time_now - time_then)-current_idleTime)/1000),
+						idle: idleTime
 						
 					});
+					current_idleTime = 0;
 					time_then = Date.now();
 
 					idleTime =0;
 					if (page ==30) {
 						lastPage = true;
 					}
+					//-------------------------
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -695,6 +699,7 @@ $(document).ready(function () {
 
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
+        current_idleTime = current_idleTime+idleTime;
         idleTime = 0;
         
     });
@@ -706,12 +711,14 @@ $(document).ready(function () {
         idleTime = 0;
     });
 });
+
 var popup_count =0;
 var clock_active = true;
+var current_idleTime = 0;
+
 function timerIncrement() {
     idleTime = idleTime + 10000;
-    //swal("Clock", "Time " + Clock.totalSeconds);
-    //alert("Nice idle "+idleTime+" delay "+delayTime);
+
     if (idleTime >= 80000 && popup_a_status &&clock_active) { // 40 seconds
         //delayTime = (delayTime + idleTime);
         Clock.pause();
@@ -733,7 +740,7 @@ function timerIncrement() {
 			    elapsed_time_seconds: ((time_resume - time_pause)/1000)
 			});
 		});
-        idleTime =0;
+        //idleTime =0;
         
         };
     }
