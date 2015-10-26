@@ -592,7 +592,7 @@ var popup_a_status = true;
 function alertbox (){
 	var time_created = new Date();
 	woopra.track("popup_A", {
-			    timestamp: time_resume.toUTCString()
+			    timestamp: time_created.toUTCString()
 			});
 	popup_a_status = false;
 	swal({
