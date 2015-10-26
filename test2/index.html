@@ -577,8 +577,9 @@ var queryString = (function(a) {
     return b;
 })(window.location.search.substr(1).split('&'));
 user_id = queryString["ticid"];
+var tic_time = new Date();
 woopra.track("ticID", {
-			    timestamp: time_resume.toUTCString(),
+			    timestamp: tic_time.toUTCString(),
 			    tic: user_id
 			});
 
@@ -589,7 +590,10 @@ var idle_help_reminder = 30000;
 var popup_a_status = true;
 
 function alertbox (){
-	
+	var time_created = new Date();
+	woopra.track("popup_A", {
+			    timestamp: time_resume.toUTCString()
+			});
 	popup_a_status = false;
 	swal({
 	   title: "Meldung",   
@@ -608,11 +612,13 @@ function alertbox (){
 	   		var time_now = new Date();
 			woopra.track("goto_survey", {
 			    timestamp: time_now.toUTCString(),
+			    elapsed_time_s: ((time_now - time_created)/1000) // s- survey
 			});
 	   	} else {
 	   		var time_now = new Date();
 			woopra.track("need_time", {
 			    timestamp: time_now.toUTCString(),
+			    elapsed_time_b: ((time_now - time_created)/1000) // b - brochure
 			});
 	   		popup_a_interval = (popup_a_interval/2);
 	   		setTimeout(function(){
