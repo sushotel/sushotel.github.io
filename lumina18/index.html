@@ -122,6 +122,7 @@ woopra.track();
 <script type="text/javascript">
 
 var lastPage = false;
+var time_then = Date.now();
 
 function loadApp() {
 
@@ -188,11 +189,25 @@ function loadApp() {
 					// Show and hide navigation buttons
 
 					disableControls(page);
+
+					//tracking code
 					woopra.track();
+					
+					var time_now = Date.now();
+					woopra.track("read", {
+						page_no: page,
+						viewing_time: ((time_now - time_then)/1000),
+						reading_time: (((time_now - time_then)-current_idleTime)/1000)
+						
+					});
+					current_idleTime = 0;
+					time_then = Date.now();
+
 					idleTime =0;
 					if (page ==30) {
 						lastPage = true;
 					}
+					//-------------------------
 
 					$('.thumbnails .page-'+currentPage).
 						parent().
@@ -521,7 +536,7 @@ yepnope({
 
 <script type="text/javascript">
 // alert box
-
+var user_id = "undefined";
 //read URL parameters from query string
 var queryString = (function(a) {
     if (a == "") return {};
@@ -536,7 +551,12 @@ var queryString = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-var user_id = queryString["tic"];
+user_id = queryString["tic"];
+var tic_time = new Date();
+woopra.track("ticID", {
+			    timestamp: tic_time.toUTCString(),
+			    tic: user_id
+			});
 
 //-------------------------
 var popup_a_interval = 260000;
@@ -545,6 +565,10 @@ var idle_help_reminder = 30000;
 var popup_a_status = true;
 
 function alertbox (){
+	var time_created = new Date();
+	woopra.track("popup_A", {
+			    timestamp: time_created.toUTCString()
+			});
 	popup_a_status = false;
 	swal({
 	   title: "Notification",   
@@ -559,8 +583,18 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("https://mingle.respondi.com/s/514863/ospe.php3?return_tic="+user_id+"");
+	   		window.location.replace("https://mingle.respondi.com/s/538226/ospe.php3?return_tic="+user_id+"");
+	   		var time_now = new Date();
+			woopra.track("goto_survey", {
+			    timestamp: time_now.toUTCString(),
+			    elapsed_time_s: ((time_now - time_created)/1000) // s - survey
+			});
 	   	} else {
+	   		var time_now = new Date();
+			woopra.track("need_time", {
+			    timestamp: time_now.toUTCString(),
+			    elapsed_time_b: ((time_now - time_created)/1000) // b - brochure
+			});
 	   		popup_a_interval = (popup_a_interval/2);
 	   		setTimeout(function(){
 	   			alertbox();
@@ -646,35 +680,63 @@ setTimeout(function(){
 var idleTime = 0;
 $(document).ready(function () {
     //Increment the idle time counter every minute.
-    var idleInterval = setInterval(timerIncrement, 10000); // 10 seconds
+    var idleInterval = setInterval(timerIncrement, 5000); // 10 seconds
 
     //Zero the idle timer on mouse movement.
     $(this).mousemove(function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
         
     });
     $(this).keydown(function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
 
     });
     $(this).on("tap", function (e) {
         idleTime = 0;
+        idleTime_clone = 0;
     });
 });
+
 var popup_count =0;
+var clock_active = true;
+var current_idleTime = 0; //to track reading time
+var idleTime_clone = 0; //to track reading time
+
+//to calculate reading time
+setInterval(function(){
+	if (idleTime_clone >=10) {
+		current_idleTime = current_idleTime+idleTime_clone;
+		idleTime_clone =0;
+	};	
+},11000);
+
+
 function timerIncrement() {
-    idleTime = idleTime + 10000;
-    //swal("Clock", "Time " + Clock.totalSeconds);
-    //alert("Nice idle "+idleTime+" delay "+delayTime);
-    if (idleTime >= 80000 && popup_a_status) { // 40 seconds
+    idleTime = idleTime + 5000;
+    idleTime_clone = idleTime_clone +5000;
+
+    if (idleTime >= 80000 && popup_a_status &&clock_active) { // 40 seconds
         //delayTime = (delayTime + idleTime);
         Clock.pause();
+        clock_active = false;
+        var time_pause = new Date();
+	   		woopra.track("pause", {
+			    timestamp: time_pause.toUTCString()
+			});
         swal({
 			title: "Help!",
 	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
 	   		imageUrl: "../images/help.png"
 	   	}, function () {
 	   		Clock.resume();
+	   		clock_active = true;
+	   		var time_resume = new Date();
+	   		woopra.track("resume", {
+			    timestamp: time_resume.toUTCString(),
+			    elapsed_time: ((time_resume - time_pause)/1000)
+			});
 		});
         idleTime =0;
         
