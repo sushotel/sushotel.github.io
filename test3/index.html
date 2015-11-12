@@ -148,6 +148,7 @@ woopra.track();
 
 var lastPage = false;
 var time_then = Date.now();
+var previousPage = 1;
 
 function loadApp() {
 
@@ -220,11 +221,12 @@ function loadApp() {
 					
 					var time_now = Date.now();
 					woopra.track("read", {
-						page_no: page,
+						page_no: previousPage,
 						viewing_time: ((time_now - time_then)/1000),
 						reading_time: (((time_now - time_then)-current_idleTime)/1000)
 						
 					});
+					previousPage = page;
 					current_idleTime = 0;
 					time_then = Date.now();
 
