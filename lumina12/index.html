@@ -618,13 +618,26 @@ function alertbox (){
 function idleAlert() {
 	var current_URL = window.location.href;
 	if (initial_URL == current_URL) {
+		Clock.pause();
+        clock_active = false;
+        var time_pause = new Date();
+	   		woopra.track("pause", {
+			    timestamp: time_pause.toUTCString()
+			});
 		swal({
-			title: "Help",
-	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
+			title: "Hilfe",
+	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
 	   		imageUrl: "../images/help.png"
 	   	}, function (){
 	   		Clock.resume();
+	   		clock_active = true;
+	   		var time_resume = new Date();
+	   		woopra.track("resume", {
+			    timestamp: time_resume.toUTCString(),
+			    elapsed_time: ((time_resume - time_pause)/1000)
+			});
 		});
+
 	} else {}
 }
 
