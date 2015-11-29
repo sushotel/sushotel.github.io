@@ -226,7 +226,7 @@ function loadApp() {
 						
 					});
 					previousPage = page;
-					alert(current_idleTime);
+					alert(current_idleTime+" "+ idleTime_clone);
 					current_idleTime = 0;
 					idleTime_clone = 0;
 					time_then = Date.now();
@@ -587,7 +587,7 @@ woopra.track("ticID", {
 			});
 
 //-------------------------
-var popup_a_interval = 260000;
+var popup_a_interval = 240000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 var popup_a_status = true;
@@ -671,10 +671,10 @@ function idleAlert() {
 
 setInterval(function(){
 	var active_time = Clock.totalSeconds;
-	if (lastPage && popup_a_status && active_time >= 220 && idleTime >=10) {
+	if (lastPage && popup_a_status && active_time >= 120 && idleTime >=5) {
     	popup_a_status = false;
     	alertbox();
-  	}else if (popup_a_status && active_time >=300 && idleTime >=10) {
+  	}else if (popup_a_status && active_time >=240) {
   		popup_a_status = false;
   		alertbox();
   	} else if (popup_a_status && active_time >=360) {
