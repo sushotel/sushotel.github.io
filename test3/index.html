@@ -226,7 +226,6 @@ function loadApp() {
 						
 					});
 					previousPage = page;
-					alert(current_idleTime+" "+ idleTime_clone);
 					current_idleTime = 0;
 					idleTime_clone = 0;
 					time_then = Date.now();
@@ -671,7 +670,7 @@ function idleAlert() {
 
 setInterval(function(){
 	var active_time = Clock.totalSeconds;
-	if (lastPage && popup_a_status && active_time >= 120 && idleTime >=5) {
+	if (lastPage && popup_a_status && active_time >= 120 && idleTime >=5000) {
     	popup_a_status = false;
     	alertbox();
   	}else if (popup_a_status && active_time >=240) {
