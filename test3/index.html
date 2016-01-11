@@ -222,7 +222,7 @@ function loadApp() {
 					woopra.track("read", {
 						page_no: previousPage,
 						viewing_time: ((time_now - time_then)/1000),
-						reading_time: (((time_now - time_then)-current_idleTime)/1000)
+						reading_time: Math.abs((((time_now - time_then)-current_idleTime)/1000))
 						
 					});
 					previousPage = page;
