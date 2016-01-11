@@ -219,14 +219,20 @@ function loadApp() {
 					woopra.track();
 					
 					var time_now = Date.now();
+					var vt = (time_now - time_then)/1000;
+					var rt = ((time_now - time_then)-current_idleTime)/1000;
+					if (rt < 0) {
+						rt = vt;
+					}
 					woopra.track("read", {
 						page_no: previousPage,
-						viewing_time: ((time_now - time_then)/1000),
-						reading_time: (((time_now - time_then)-current_idleTime)/1000)
+						viewing_time: vt,
+						reading_time: Math.abs(rt)
 						
 					});
 					previousPage = page;
 					current_idleTime = 0;
+					idleTime_clone = 0;
 					time_then = Date.now();
 
 					idleTime =0;
@@ -585,7 +591,7 @@ woopra.track("ticID", {
 			});
 
 //-------------------------
-var popup_a_interval = 260000;
+var popup_a_interval = 180000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 var popup_a_status = true;
@@ -669,10 +675,10 @@ function idleAlert() {
 
 setInterval(function(){
 	var active_time = Clock.totalSeconds;
-	if (lastPage && popup_a_status && active_time >= 220 && idleTime >=10) {
+	if (lastPage && popup_a_status && active_time >= 120 && idleTime >=10) {
     	popup_a_status = false;
     	alertbox();
-  	}else if (popup_a_status && active_time >=300 && idleTime >=10) {
+  	}else if (popup_a_status && active_time >=240 && idleTime >=10) {
   		popup_a_status = false;
   		alertbox();
   	} else if (popup_a_status && active_time >=360) {
