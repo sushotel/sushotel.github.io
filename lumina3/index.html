@@ -194,10 +194,15 @@ function loadApp() {
 					woopra.track();
 					
 					var time_now = Date.now();
+					var vt = (time_now - time_then)/1000;
+					var rt = ((time_now - time_then)-current_idleTime)/1000;
+					if (rt < 0) {
+						rt = vt;
+					}
 					woopra.track("read", {
 						page_no: previousPage,
-						viewing_time: ((time_now - time_then)/1000),
-						reading_time: (((time_now - time_then)-current_idleTime)/1000)
+						viewing_time: vt,
+						reading_time: Math.abs(rt)
 						
 					});
 					previousPage = page;
