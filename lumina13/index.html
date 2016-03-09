@@ -566,7 +566,7 @@ woopra.track("ticID", {
 			});
 
 //-------------------------
-var popup_a_interval = 180000;
+var popup_a_interval = 60000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 var popup_a_status = true;
@@ -586,7 +586,8 @@ function alertbox (){
 	   confirmButtonText: "Goto Questionnaire",   
 	   cancelButtonText: "Read Brochure",   
 	   closeOnConfirm: false,   
-	   closeOnCancel: true 
+	   closeOnCancel: true, 
+	   allowEscapeKey: false
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
@@ -602,7 +603,7 @@ function alertbox (){
 			    timestamp: time_now.toUTCString(),
 			    elapsed_time_b: ((time_now - time_created)/1000) // b - brochure
 			});
-	   		popup_a_interval = (popup_a_interval/2);
+	   		//popup_a_interval = (popup_a_interval/2);
 	   		setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
@@ -633,7 +634,8 @@ function idleAlert() {
 		swal({
 			title: "Help!",
 	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
-	   		imageUrl: "../images/help.png"
+	   		imageUrl: "../images/help.png",
+	   		allowEscapeKey: false
 	   	}, function (){
 	   		Clock.resume();
 	   		clock_active = true;
@@ -748,7 +750,8 @@ function timerIncrement() {
         swal({
 			title: "Help!",
 	   		text: "You can scroll through the brochure by clicking either on the left or right edge of the page, or on the top corner. It is also possible to go through the brochure in any direction.",
-	   		imageUrl: "../images/help.png"
+	   		imageUrl: "../images/help.png",
+	   		allowEscapeKey: false
 	   	}, function () {
 	   		Clock.resume();
 	   		clock_active = true;

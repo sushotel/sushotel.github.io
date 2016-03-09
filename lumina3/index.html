@@ -566,7 +566,7 @@ woopra.track("ticID", {
 			});
 
 //-------------------------
-var popup_a_interval = 180000;
+var popup_a_interval = 60000;
 var initial_URL = window.location.href;
 var idle_help_reminder = 30000;
 var popup_a_status = true;
@@ -586,7 +586,8 @@ function alertbox (){
 	   confirmButtonText: "Fragebogen fortf\xFChren",   
 	   cancelButtonText: "Brosch\xFCre weiterlesen",   
 	   closeOnConfirm: false,   
-	   closeOnCancel: true 
+	   closeOnCancel: true,
+	   allowEscapeKey: false
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
@@ -602,7 +603,7 @@ function alertbox (){
 			    timestamp: time_now.toUTCString(),
 			    elapsed_time_b: ((time_now - time_created)/1000) // b - brochure
 			});
-	   		popup_a_interval = (popup_a_interval/2);
+	   		//popup_a_interval = (popup_a_interval/2);
 	   		setTimeout(function(){
 	   			alertbox();
 	   			}, popup_a_interval);
@@ -633,7 +634,8 @@ function idleAlert() {
 		swal({
 			title: "Hilfe",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
-	   		imageUrl: "../images/help.png"
+	   		imageUrl: "../images/help.png",
+	   		allowEscapeKey: false
 	   	}, function (){
 	   		Clock.resume();
 	   		clock_active = true;
@@ -748,7 +750,8 @@ function timerIncrement() {
         swal({
 			title: "Hilfe!",
 	   		text: "Sie k\xF6nnen in der Brosch\xFCre bl\xE4ttern, indem Sie mit der Maus den oberen oder unteren rechten Rand der Seite anklicken. Oder Sie f\xFChren mit gedr\xFCckter Maustaste eine Bl\xE4tterbewegung durch. Ihnen ist es m\xF6glich jederzeit vor- und auch wieder zur\xFCck zu bl\xE4ttern.",
-	   		imageUrl: "../images/help.png"
+	   		imageUrl: "../images/help.png",
+	   		allowEscapeKey: false
 	   	}, function () {
 	   		Clock.resume();
 	   		clock_active = true;
