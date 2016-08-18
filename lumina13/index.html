@@ -548,7 +548,9 @@ yepnope({
 
 <script type="text/javascript">
 // alert box
-var user_id = "undefined";
+
+/*var user_id = "undefined"; */
+
 //read URL parameters from query string
 var queryString = (function(a) {
     if (a == "") return {};
@@ -563,11 +565,12 @@ var queryString = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-user_id = queryString["tic"];
+
+/*user_id = queryString["tic"];
 var tic_time = new Date();
 woopra.track("ticID", {
 			    timestamp: tic_time.toUTCString(),
-			    tic: user_id
+			    tic: user_id */
 			});
 
 //-------------------------
@@ -596,7 +599,7 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("http://www.unipark.de/uc/sustainablehotels/");
+	   		window.location.replace("http://www.unipark.de/uc/sustainablehotels");
 	   		var time_now = new Date();
 			woopra.track("goto_survey", {
 			    timestamp: time_now.toUTCString(),
