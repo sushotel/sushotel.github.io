@@ -548,7 +548,8 @@ yepnope({
 
 <script type="text/javascript">
 // alert box
-var user_id = "undefined"; 
+
+/*var user_id = "undefined"; */
 
 //read URL parameters from query string
 var queryString = (function(a) {
@@ -564,12 +565,13 @@ var queryString = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-user_id = queryString["tic"];
+
+/*user_id = queryString["tic"];
 var tic_time = new Date();
 woopra.track("ticID", {
 			    timestamp: tic_time.toUTCString(),
 			    tic: user_id 
-			}); 
+			}); */
 
 //-------------------------
 var popup_a_interval = 60000;
