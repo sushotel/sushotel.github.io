@@ -565,7 +565,6 @@ var queryString = (function(a) {
     }
     return b;
 })(window.location.search.substr(1).split('&'));
-
 user_id = queryString["tic"];
 var tic_time = new Date();
 woopra.track("ticID", {
@@ -599,7 +598,7 @@ function alertbox (){
 	}, 
 	   function(isConfirm){   
 	   	if (isConfirm) {     
-	   		window.location.replace("http://www.unipark.de/uc/sustainable_hotel/4f60/ospe.php?return_tic="+user_id+");
+	   		window.location.replace("http://www.unipark.de/uc/sustainable_hotel/4f60/ospe.php?return_tic="+user_id+"");
 	   		var time_now = new Date();
 			woopra.track("goto_survey", {
 			    timestamp: time_now.toUTCString(),
