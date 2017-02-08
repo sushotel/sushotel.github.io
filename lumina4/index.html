@@ -564,12 +564,17 @@ var queryString = (function(a) {
     return b;
 })(window.location.search.substr(1).split('&'));
 user_id = queryString["tic"];
+unipark_id = queryString["ln"]
 var tic_time = new Date();
 woopra.track("ticID", {
 			    timestamp: tic_time.toUTCString(),
-			    tic: user_id
-			});
+			    tic: user_id 
+			}); 
 
+woopra.track("uniparkID", {
+			    timestamp: tic_time.toUTCString(),
+			    uniparkID: unipark_id 
+			});
 //-------------------------
 var popup_a_interval = 60000;
 var initial_URL = window.location.href;
